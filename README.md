@@ -34,12 +34,12 @@ close;
 fs = 50000;
 t = 0:1/fs:0.05;
 
-m1 = 1.7*sin(2*%pi*163*t);
-m2 = 1.8*sin(2*%pi*173*t);
-m3 = 1.9*sin(2*%pi*183*t);
-m4 = 2.0*sin(2*%pi*193*t);
-m5 = 2.1*sin(2*%pi*203*t);
-m6 = 2.2*sin(2*%pi*213*t);
+m1 = 3.7*sin(2*%pi*363*t);
+m2 = 3.8*sin(2*%pi*373*t);
+m3 = 3.9*sin(2*%pi*383*t);
+m4 = 4.0*sin(2*%pi*393*t);
+m5 = 4.1*sin(2*%pi*403*t);
+m6 = 4.2*sin(2*%pi*413*t);
 
 c1 = cos(2*%pi*2000*t);
 c2 = cos(2*%pi*4000*t);
@@ -104,10 +104,15 @@ subplot(3,2,3); plot(t,d3); title("Demod 3");
 subplot(3,2,4); plot(t,d4); title("Demod 4");
 subplot(3,2,5); plot(t,d5); title("Demod 5");
 subplot(3,2,6); plot(t,d6); title("Demod 6");
+
 ```
 
 ## OUTPUT WAVEFORM
+<img width="1919" height="1117" alt="image" src="https://github.com/user-attachments/assets/2fe9f351-5281-4dd2-a629-8ea237719b54" />
 
+<img width="1919" height="1135" alt="image" src="https://github.com/user-attachments/assets/b607d15f-c2c4-4da8-b333-e0bc937919fa" />
+
+<img width="1919" height="1119" alt="image" src="https://github.com/user-attachments/assets/bbea6eab-405e-4da9-865a-236b954739de" />
 
 ## CALCULATION
 ![WhatsApp Image 2025-11-22 at 12 33 15 PM](https://github.com/user-attachments/assets/156d0476-6c2d-4323-a3ac-c6a1a96714a5)
