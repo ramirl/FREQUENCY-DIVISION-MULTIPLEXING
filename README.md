@@ -115,10 +115,10 @@ subplot(3,2,6); plot(t,d6); title("Demod 6");
 <img width="1919" height="1119" alt="image" src="https://github.com/user-attachments/assets/bbea6eab-405e-4da9-865a-236b954739de" />
 
 ## CALCULATION
-![WhatsApp Image 2025-11-25 at 20 27 31_615bd864](https://github.com/user-attachments/assets/c1051799-96bd-457b-8c34-6436ccfde8c6)
 
-![WhatsApp Image 2025-11-25 at 20 27 31_e792a45a](https://github.com/user-attachments/assets/9e486cb0-785e-4de8-a918-bae7cd0f9c7b)
+![20251128_200136](https://github.com/user-attachments/assets/58e2fcea-de8c-442c-b62d-390814877894)
 
+![20251128_200143](https://github.com/user-attachments/assets/ba1fde50-2eac-4ecb-86dd-e8166d3e38b3)
 
 ## RESULT
 Six different message signals were generated and modulated using FDM. All modulated signals were added to form a multiplexed FDM signal. Each message was successfully recovered using coherent demodulation followed by low-pass filtering. The plots confirmed accurate multiplexing and demultiplexing.
