@@ -27,98 +27,63 @@ At the receiver, each signal is recovered by multiplying the multiplexed signal 
 
 ## PROGRAM
 ```
-clc; 
-clear; 
-close;
-
-fs = 50000;
-t = 0:1/fs:0.05;
-
-m1 = 3.7*sin(2*%pi*363*t);
-m2 = 3.8*sin(2*%pi*373*t);
-m3 = 3.9*sin(2*%pi*383*t);
-m4 = 4.0*sin(2*%pi*393*t);
-m5 = 4.1*sin(2*%pi*403*t);
-m6 = 4.2*sin(2*%pi*413*t);
-
-c1 = cos(2*%pi*2000*t);
-c2 = cos(2*%pi*4000*t);
-c3 = cos(2*%pi*6000*t);
-c4 = cos(2*%pi*8000*t);
-c5 = cos(2*%pi*10000*t);
-c6 = cos(2*%pi*12000*t);
-
-s1 = m1 .* c1;
-s2 = m2 .* c2;
-s3 = m3 .* c3;
-s4 = m4 .* c4;
-s5 = m5 .* c5;
-s6 = m6 .* c6;
-
-fdm = s1 + s2 + s3 + s4 + s5 + s6;
-
-r1 = fdm .* c1;
-r2 = fdm .* c2;
-r3 = fdm .* c3;
-r4 = fdm .* c4;
-r5 = fdm .* c5;
-r6 = fdm .* c6;
+t = linspace(0, 1, 1000);
+fs = 1000; 
 
 
-cutoff_hz = 400;
-norm_cutoff = cutoff_hz/(fs/2);
+freqs = [8, 10, 12, 14, 16, 18]; 
 
-M = 101; 
+signals = zeros(6, length(t));
+for i = 1:6
+  signals(i, :) = cos(2 * %pi * freqs(i) * t);
+end
 
-[h, w] = wfir('lp', M, [norm_cutoff, 0], 'hm', 0);  
+fdm_signal = zeros(1, length(t));
+for i = 1:6
+  fdm_signal = fdm_signal + signals(i, :);
+end
 
-d1 = conv(r1, h, 'same');
-d2 = conv(r2, h, 'same');
-d3 = conv(r3, h, 'same');
-d4 = conv(r4, h, 'same');
-d5 = conv(r5, h, 'same');
-d6 = conv(r6, h, 'same');
+order = 100; 
+cutoff_freq = 15 / (fs/2);  
+h = ffilt("lp", order, cutoff_freq);
 
-d1 = 2 * d1;
-d2 = 2 * d2;
-d3 = 2 * d3;
-d4 = 2 * d4;
-d5 = 2 * d5;
-d6 = 2 * d6;
+demux_signals = zeros(6, length(t));
+for i = 1:6
+  mixed = fdm_signal .* cos(2 * %pi * freqs(i) * t);
+  demux_signals(i, :) = filter(h, 1, mixed);
+end
 
-figure(1);
-subplot(3,2,1); plot(t,m1); title("Message 1");
-subplot(3,2,2); plot(t,m2); title("Message 2");
-subplot(3,2,3); plot(t,m3); title("Message 3");
-subplot(3,2,4); plot(t,m4); title("Message 4");
-subplot(3,2,5); plot(t,m5); title("Message 5");
-subplot(3,2,6); plot(t,m6); title("Message 6");
+scf(1); clf;
+for i = 1:6
+  subplot(3,2,i);
+  plot(t, signals(i, :));
+  title('Original Signal f=' + string(freqs(i)));
+end
 
-figure(2);
-plot(t,fdm); title("Multiplexed FDM");
+scf(2); clf;
+plot(t, fdm_signal);
+title('FDM Signal');
 
-figure(3);
-subplot(3,2,1); plot(t,d1); title("Demod 1");
-subplot(3,2,2); plot(t,d2); title("Demod 2");
-subplot(3,2,3); plot(t,d3); title("Demod 3");
-subplot(3,2,4); plot(t,d4); title("Demod 4");
-subplot(3,2,5); plot(t,d5); title("Demod 5");
-subplot(3,2,6); plot(t,d6); title("Demod 6");
+scf(3); clf;
+for i = 1:6
+  subplot(3,2,i);
+  plot(t, demux_signals(i, :));
+  title('Demultiplexed Signal f=' + string(freqs(i)));
+end
+
 
 ```
 
 ## OUTPUT WAVEFORM
-<img width="1919" height="1117" alt="image" src="https://github.com/user-attachments/assets/2fe9f351-5281-4dd2-a629-8ea237719b54" />
+<img width="1917" height="1038" alt="image" src="https://github.com/user-attachments/assets/1c1bd763-9388-4d16-928b-ea8b60333b32" />
+<img width="1916" height="1047" alt="image" src="https://github.com/user-attachments/assets/fce98fc6-2ce4-431f-9945-19178f7bf982" />
+<img width="1919" height="1000" alt="image" src="https://github.com/user-attachments/assets/d755e922-79a4-4a63-949a-10c7db2cd0b1" />
 
-<img width="1919" height="1135" alt="image" src="https://github.com/user-attachments/assets/b607d15f-c2c4-4da8-b333-e0bc937919fa" />
-
-<img width="1919" height="1119" alt="image" src="https://github.com/user-attachments/assets/bbea6eab-405e-4da9-865a-236b954739de" />
 
 ## CALCULATION
-
-![20251128_200136](https://github.com/user-attachments/assets/58e2fcea-de8c-442c-b62d-390814877894)
-
-![20251128_200143](https://github.com/user-attachments/assets/ba1fde50-2eac-4ecb-86dd-e8166d3e38b3)
+![WhatsApp Image 2025-12-03 at 19 58 24_e87f8a17](https://github.com/user-attachments/assets/bd9da047-afe9-4920-a16f-a7b282a4fb04)
+![WhatsApp Image 2025-12-03 at 19 58 24_fb3e376f](https://github.com/user-attachments/assets/ca635684-bb76-4b5b-ab57-d20b1eff193c)
+![WhatsApp Image 2025-12-03 at 19 58 24_fdcb148e](https://github.com/user-attachments/assets/af96ffc1-39aa-47c8-86f3-1a6ede3ba9a3)
 
 ## RESULT
 Six different message signals were generated and modulated using FDM. All modulated signals were added to form a multiplexed FDM signal. Each message was successfully recovered using coherent demodulation followed by low-pass filtering. The plots confirmed accurate multiplexing and demultiplexing.
